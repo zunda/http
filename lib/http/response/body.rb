@@ -28,7 +28,7 @@ module HTTP
       def readpartial(*args)
         stream!
         chunk = @stream.readpartial(*args)
-        chunk.force_encoding(@encoding) if chunk and not chunk.empty?
+        chunk.force_encoding(@encoding) if chunk
       end
 
       # Iterate over the body, allowing it to be enumerable
@@ -49,9 +49,8 @@ module HTTP
           @contents   = String.new("").force_encoding(@encoding)
 
           while (chunk = @stream.readpartial)
-            chunk.force_encoding(@encoding) unless chunk.empty?
-            @contents << chunk
-            chunk.clear unless chunk.empty? # deallocate string
+            @contents << chunk.force_encoding(@encoding)
+            chunk.clear # deallocate string
           end
         rescue
           @contents = nil
