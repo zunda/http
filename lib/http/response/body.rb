@@ -28,7 +28,7 @@ module HTTP
       def readpartial(*args)
         stream!
         chunk = @stream.readpartial(*args)
-        chunk.force_encoding(@encoding) if chunk
+        chunk.force_encoding(@encoding) if chunk and not chunk.empty?
       end
 
       # Iterate over the body, allowing it to be enumerable
