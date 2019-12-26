@@ -49,7 +49,8 @@ module HTTP
           @contents   = String.new("").force_encoding(@encoding)
 
           while (chunk = @stream.readpartial)
-            @contents << chunk.force_encoding(@encoding)
+            chunk.force_encoding(@encoding) unless chunk.empty?
+            @contents << chunk
             chunk.clear # deallocate string
           end
         rescue
