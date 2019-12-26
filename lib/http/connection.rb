@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "forwardable"
 
 require "http/headers"
@@ -91,7 +93,7 @@ module HTTP
       chunk    = @parser.read(size)
       finish_response if finished
 
-      chunk ? chunk.to_s : ""
+      chunk ? chunk.to_s : +""
     end
 
     # Reads data from socket up until headers are loaded
